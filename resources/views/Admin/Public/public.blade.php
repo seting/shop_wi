@@ -243,7 +243,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="icon-user"></i> 分类管理</a>
+                        <a href="#"><i class="icon-th-list"></i> 分类管理</a>
                         <ul class="closed">
                             <li><a href="/cate/create">分类添加</a></li>
                             <li><a href="/cate">分类列表</a></li>
@@ -255,6 +255,13 @@
                         <ul class="closed">
                             <li><a href="/goods/create">商品添加</a></li>
                             <li><a href="/goods">商品列表</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="icon-th-list"></i>收藏管理</a>
+                        <ul class="closed">
+                            <li><a href="/collect">收藏列表</a></li>
                         </ul>
                     </li>
 
@@ -293,6 +300,16 @@
         
         <!-- Main Container Start -->
         <div id="mws-container" class="clearfix">
+                @if(session('success'))
+                    <div class="mws-form-message success">
+                        {{session('success')}}
+                    </div>
+                    @endif
+                    @if(session('error'))
+                    <div class="mws-form-message error">
+                        {{session('error')}}
+                    </div>
+                @endif
                 @section('content')
                 @show
         </div>

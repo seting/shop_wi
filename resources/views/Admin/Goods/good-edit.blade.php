@@ -1,45 +1,87 @@
 @extends('Admin.Public.public')
 @section('content')
-@section('title','公告列表')
+@section('title','商品列表')
 <!doctype html>
 <div class="mws-panel grid_8">
           <div class="mws-panel-header">
-               <span>会员添加</span>
+               <span>商品修改</span>
           </div>
+            @if (count($errors) > 0)
+            <div class="mws-form-message warning">
+              <div class="alert alert-danger">
+              <ul>
+              @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+              @endforeach
+              </ul>
+              </div>
+              </div>
+            @endif
           <div class="mws-panel-body no-padding">
-               <form action="/admins" method="post" class="mws-form">
-                                   <div class="mws-form-inline">
+               <form action="/goods/{{$good->id}}" method="post" class="mws-form" enctype="multipart/form-data">
+                    <div class="mws-form-inline">
                          <div class="mws-form-row">
-                              <label class="mws-form-label">用户名:</label>
-                              <div class="mws-form-item">
-                                   <input type="text" class="small" name="username" value="">
+                              <label class="mws-form-label">商品名:</label>
+                              <div class="mws-form-item" style="width:900px;">
+                                   <input type="text" class="small" name="name" value="{{$good->name}}" >
                               </div>
                          </div>
                          <div class="mws-form-row">
-                              <label class="mws-form-label">密码:</label>
-                              <div class="mws-form-item">
-                                   <input type="password" name="password" class="small" value="">
+                              <label class="mws-form-label">类别:</label>
+                              <div class="mws-form-item" style="width:500px;">
+                              <select class="large" name="type_id">
+                                  <option disabled >--请选择--</option>
+                                  @foreach($type as $row)
+                                    @if($type_id==$row->id)                                
+                                      <option value="{{$row->id}}" selected >{{$row->name}}</option>
+                                    @else
+                                      <option value="{{$row->id}}" >{{$row->name}}</option>
+                                    @endif
+                                  @endforeach
+                                </select>
                               </div>
                          </div>
                          <div class="mws-form-row">
-                              <label class="mws-form-label">确认密码:</label>
-                              <div class="mws-form-item">
-                                   <input type="password" name="repassword" class="small" value="">
+                              <label class="mws-form-label">修改图片:</label>
+                              <div class="mws-form-item" style="width:500px;">
+                                   <input type="file" name="pic" class="small" value="" >
+                                   <input type="hidden" name="oldpic" class="small" value="{{$good->pic}}" >
                               </div>
                          </div>
                          <div class="mws-form-row">
-                              <label class="mws-form-label">权限:</label>
-                              <div class="mws-form-item">
-                                   <input type="text" name="level" class="small" value="">
+                              <label class="mws-form-label">描述:</label>
+                              <div class="mws-form-item">                                   
+                                   <textarea rows="10" cols="60" name='descr' maxlength="400">{{$good->descr}}</textarea>
                               </div>
                          </div>
+                         <div class="mws-form-row">
+                              <label class="mws-form-label">状态:</label>
+                              <div class="mws-form-item" style="width:500px;">
+                                   <select class="large" name="static">
+                                       @if($good->static=='显示')
+                                       <option value="0" >显示</option>
+                                       <option value="1">隐藏</option>
+                                       @else
+                                       <option value="1" >隐藏</option>
+                                       <option value="0" >显示</option>
+                                       @endif
+                                </select>
+                              </div>
+                         </div>
+                         <div class="mws-form-row">
+                              <label class="mws-form-label">价格(￥):</label>
+                              <div class="mws-form-item" style="width:900px;">
+                                   <input type="text" name="price" class="small" value="{{$good->price}}">
+                              </div>
+                         </div>
+                         <input type="hidden" name="sales" class="small" value="0">
                     </div>
+                    {{csrf_field()}}
+                    {{method_field('PUT')}}
                     <div class="mws-button-row">
-                    <input type="hidden" name="status" value="0">
-                         <input type="submit" class="btn btn-danger" value="添加">
+                         <input type="submit" class="btn btn-danger" value="修改">
                          <input type="reset" class="btn " value="重置">
                     </div>
-                    <input type="hidden" name="_token" value="I4Qc7n8TUQzUf5IC9NUMhsGGqGZ2SBTOHe64KrLD">
                </form>
           </div>         
       </div>
