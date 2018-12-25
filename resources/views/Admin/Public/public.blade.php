@@ -287,6 +287,26 @@
                             <li><a href="/notice">公告列表</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#"><i class="icon-user"></i> 广告管理</a>
+                        <ul class="closed">
+                            <li><a href="/advertisement/create">广告添加</a></li>
+                            <li><a href="/advertisement">广告列表</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="icon-user"></i> 评论管理</a>
+                        <ul class="closed">
+                            <li><a href="/judge">评论列表</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="icon-user"></i> 站内信管理</a>
+                        <ul class="closed">
+                            <li><a href="/letter/create">发站内信</a></li>
+                            <li><a href="/letter">站内信列表</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>         
         </div>

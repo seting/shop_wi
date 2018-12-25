@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-// 导入DB;
 use DB;
-class NoticeController extends Controller
+class JudgeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +17,11 @@ class NoticeController extends Controller
         // 获取搜索关键词    
         $k=$request->input('keywords');
         //获取列表数据        
-        $data=DB::table("notice")->where("title",'like',"%".$k."%")->paginate(5);        
+        $data=DB::table("goods_judge")->where("judge",'like',"%".$k."%")->paginate(5);        
         //加载模板        
-        return view("Admin.Notice.notice",['data'=>$data,'request'=>$request->all()]);
+        return view("Admin.Judge.judge",['data'=>$data,'request'=>$request->all()]);
     }
-
+ 
     /**
      * Show the form for creating a new resource.
      *
@@ -31,7 +30,7 @@ class NoticeController extends Controller
     public function create()
     {
         // 加载添加模板
-        return view('Admin.Notice.notice-add');
+        return view('Admin.Judge.judge-add');
     }
 
     /**
@@ -42,14 +41,7 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-        // var_dump($request->all());
-        $data = $request->except('_token');
-        // var_dump($data);
-        if (DB::table('notice')->insert($data)) {
-            return redirect('/notice')->with('success','添加成功');
-        }else{
-            return redirect('/notice')->with('error','添加失败');
-        }
+        //
     }
 
     /**
@@ -71,8 +63,7 @@ class NoticeController extends Controller
      */
     public function edit($id)
     {
-        // 修改公告模板
-        return view('Admin.Notice.notice-edit');
+        //
     }
 
     /**
@@ -95,26 +86,18 @@ class NoticeController extends Controller
      */
     public function destroy($id)
     {
-       // echo $id;
-       $data = DB::table('notice')->where('id','=',$id)->first();
-       // var_dump($data->content);
-       $str = $data->content;
-       preg_match_all('/<img.*?src="(.*?)".*?>/is',$str,$array);
-       // var_dump($array);
-       // 执行删除
-        if (DB::table('notice')->where('id','=',$id)->delete()) {
-           
-       
-           if (isset($array[1])) {
-                foreach ($array[1] as $key => $value) {
-                    $s = substr($value,0,4);
-                    // 判断是上传的图片还是远程图片
-                    if ($s != 'http') {
-                        unlink('.'.$value);
-                    }
-                }
-                return redirect('/notice')->with('success','删除成功');
-            }
-        }
+        // echo $id;
+        
+    }
+
+     // ajax删除
+    public function del(Request $request){
+        $id=$request->input('id');
+        // echo $id;exit;
+        if(DB::table("goods_judge")->where("id",'=',$id)->delete()){
+            echo 1;
+        }else{
+            echo 0;
+        } 
     }
 }
